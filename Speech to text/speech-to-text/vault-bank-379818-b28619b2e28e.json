@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "vault-bank-379818",
+  "private_key_id": "b28619b2e28ed1e61567a49de61d275c773e9f7a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCwo75S6CTb0iMS\nXNeejwnEXiZUdAIRtZN8pDIcy85vsmUi2B4C/Yj8PN8wMONM6RwRi71dIczldH5T\nD8iSN3yJnB17y5VaJKokjN6K8j/KywMNUmQCB8lBrplBvFzEkaQu6/dKPESWAqJX\n+8C9kuZr2Cl6iujC7/QkuqptSYPXAI/feQ8MuDYBxbPSgmHYVLqZJgB9SyU1kKN/\nz7F8myuH+YfKmBy28XUhYnwAiJxw78s2M7yKp9jswecxbTGbhZJgyyq32/fxfWUP\npA3fa03I0u/yLBrx0W77p9YXxEqlnDNSBTnIfFhpl+8wqTUdjJUTMbC9lmvmM7FG\nObYrIsCfAgMBAAECggEAAv6ToGYtEcjrLUmDoj18heausanRyykP2gISk2hlFIGq\nsz+EqrpPky8Y/YEmqUweXLHIwQZsqcsixRe0Z74nD1IlMc8Otht/AuWcdDCNIkv0\nvkoSRfKJ1+I02OdvjymE5gK8C3cgFobu55zt9IjD/ToJ4fju3zcgJWtArl+bq45g\nmeNiVrMQ/AOcuHCriT4ODfeLoEZWJhGuRw5Yhwpmq7pQm4QCI8EnvfZloGk6NvaK\nq7TBOMZgJqrasdTQQlJNj9JWF/KLztjZG5l6xSJFe+yYesVNlOdGNlWVuFhqc9r3\n70BJ8Oloyp6CL5VYQp9dzZy60cmLMv8Hm2yohEBmeQKBgQD03JZJVpr27Sj9qHuV\nd3Nop0n+fzv0AG+4t4itYSgCwr/AHswDKtFnm8UX+zAmwg6bltiT+phCnK8LnpOj\nwb64uO61quzxRX9Ydw5pCQ30dZG5bx6T/T9jApBn/6WmcryZedW7ft55l+L1f5b0\nG3ROlqGIDwUs05dwZ2SknlR20wKBgQC4rLYEmPzUYEirF4Cyl1qvQtR/Yk1PEa7H\nIJ3ARhg1aftCEJSlsv+t3oasav7pT8VjpBjQMEw0mn/Drp0pleci5spF+pU3qU56\nLJx4r2nhOs/Ac28lNVpB+3FIUiesqXG80XOnfLCaYIAF4gd1yFg8H1ly/UnRf1E6\nFWGj47HHhQKBgHWEDIikDPlnNt4OZ0mDq5rVdtiyfbaMIxJW2zzCvS4eA2MUJLt8\naEW+Z6grwJ9JUTNxAP58LWkCw6vi7l6QVJVZBA+iOddNkGGHuh3E37KsXkTNxLIn\nv60oBOA0vG6W8FcENwSmTeWzdJR4KJ19M6On/VxMQSKTZkHnDVFIP6dLAoGAX1Km\n0VC2kFjyqX2ELKr7YCO609XF2d5ivN4VDz4fGNMPolY0pCL03qZSFYVU9tD6Lihx\ntmR3sV9eO39SGDkMCXPfTKe/he+aVm3YhmLk4CEfQ1NSN36GjDBhlNbzK6h60N+8\nNuOhtM3Cx0aYWy+Ce+Yiobwj8kMphjWrJJFPHpECgYAaB5/rdsVNfsfO144FV9Sk\n7pNSbfYh5Uk4gDJ6K5L9+58xX5dRVJucKuILKMaSNovdpGaV7hyG1fp9wZDZIMCI\nZQjzAs57nu0o34J3CHEwMxfKDvJiMUph7MUWyUMAUptaKpaHlly+aqmd2MsK8Vn+\nSb2O0GuGbHclIUjmWmuemg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "vault-bank-930@vault-bank-379818.iam.gserviceaccount.com",
+  "client_id": "117803948462214810611",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vault-bank-930%40vault-bank-379818.iam.gserviceaccount.com"
+}
