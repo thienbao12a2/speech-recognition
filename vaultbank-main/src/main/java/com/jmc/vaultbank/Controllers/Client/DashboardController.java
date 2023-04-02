@@ -2,6 +2,7 @@ package com.jmc.vaultbank.Controllers.Client;
 
 import com.jmc.vaultbank.Models.Model;
 import com.jmc.vaultbank.Models.Transaction;
+import com.jmc.vaultbank.Models.Trying_Different_Languages;
 import com.jmc.vaultbank.Views.TransactionCellFactory;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
@@ -38,6 +39,8 @@ public class DashboardController implements Initializable {
         transaction_listview.setCellFactory(event -> new TransactionCellFactory());
         transfer_money_btn.setOnAction(event -> onSendMoney());
         accountSummary();
+        Trying_Different_Languages I = new Trying_Different_Languages();
+        I.speak("Hello, welcome to vault bank");
     }
     private void bindData() {
         user_name.textProperty().bind(Bindings.concat("Hi , ").concat(Model.getInstance().getClient().firstNameProperty()));

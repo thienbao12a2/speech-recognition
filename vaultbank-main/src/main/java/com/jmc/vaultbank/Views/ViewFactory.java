@@ -2,6 +2,7 @@ package com.jmc.vaultbank.Views;
 
 import com.jmc.vaultbank.Controllers.Admin.AdminController;
 import com.jmc.vaultbank.Controllers.Client.ClientController;
+import com.jmc.vaultbank.Models.Trying_Different_Languages;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +40,8 @@ public class ViewFactory {
         if (dashboardView == null) {
             try {
                 dashboardView = new FXMLLoader(getClass().getResource("/Fxml/Client/Dashboard.fxml")).load();
+                Trying_Different_Languages we = new Trying_Different_Languages();
+                we.speak("Welcome, voice command is active.");
             } catch (Exception e) {
                 e.printStackTrace();
             }

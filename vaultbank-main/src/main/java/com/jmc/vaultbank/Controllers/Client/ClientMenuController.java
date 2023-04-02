@@ -1,11 +1,17 @@
 package com.jmc.vaultbank.Controllers.Client;
 
+import com.jmc.vaultbank.Models.MicrophoneStreamRecognizer;
 import com.jmc.vaultbank.Models.Model;
+import com.jmc.vaultbank.Models.Trying_Different_Languages;
 import com.jmc.vaultbank.Views.ClientMenuOptions;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import com.jmc.vaultbank.Models.Trying_Different_Languages;
 
+
+import javax.sound.sampled.LineUnavailableException;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
