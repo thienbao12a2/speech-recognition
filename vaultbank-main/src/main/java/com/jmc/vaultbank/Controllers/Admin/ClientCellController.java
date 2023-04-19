@@ -1,6 +1,7 @@
 package com.jmc.vaultbank.Controllers.Admin;
 
 import com.jmc.vaultbank.Models.Client;
+import com.jmc.vaultbank.Models.DatabaseDriver;
 import com.jmc.vaultbank.Views.ClientCellFactory;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,9 +19,13 @@ public class ClientCellController implements Initializable {
     public Label date_label;
     public Button delete_btn;
     private final Client client;
+    private final DatabaseDriver databaseDriver;
+    private final ClientsController clientsController;
 
     public ClientCellController(Client client) {
         this.client = client;
+        this.databaseDriver = new DatabaseDriver();
+        this.clientsController = new ClientsController();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,5 +35,6 @@ public class ClientCellController implements Initializable {
         checking_acc_label.textProperty().bind(client.checkingAccountProperty().asString());
         saving_account_label.textProperty().bind(client.savingAccountProperty().asString());
         date_label.textProperty().bind(client.dateCreatedProperty().asString());
+        delete_btn.setOnAction(event -> databaseDriver.deleteClient(userID_label.getText()));
     }
 }

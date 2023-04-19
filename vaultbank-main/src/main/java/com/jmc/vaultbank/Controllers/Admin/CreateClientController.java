@@ -84,7 +84,7 @@ public class CreateClientController implements Initializable {
     private String createUserName() {
         int id = Model.getInstance().getDatabaseDriver().getLastClientsId() + 1;
         char firstChar = Character.toLowerCase(fname_field.getText().charAt(0));
-        return "@" + firstChar + lname_field.getText() + id;
+        return "@" + firstChar + lname_field.getText().toLowerCase() + id;
     }
     private void emptyField() {
         fname_field.setText("");

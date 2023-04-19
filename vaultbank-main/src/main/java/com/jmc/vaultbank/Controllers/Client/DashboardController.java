@@ -5,6 +5,7 @@ import com.jmc.vaultbank.Models.Model;
 import com.jmc.vaultbank.Models.Transaction;
 import com.jmc.vaultbank.Models.Trying_Different_Languages;
 import com.jmc.vaultbank.Views.TransactionCellFactory;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -36,9 +37,11 @@ public class DashboardController implements Initializable {
     public TextField amount_field;
     public TextArea message_field;
     public Button transfer_money_btn;
+    public static Thread speechThread;
     public static boolean useVoice = true;
     public static boolean welcome = true;
     public static boolean mute = false;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bindData();
@@ -59,7 +62,7 @@ public class DashboardController implements Initializable {
         saving_number.textProperty().bind(Model.getInstance().getClient().savingAccountProperty().get().accountNumberProperty());
     }
     public void voiceCommand() {
-        Thread speechThread = new Thread(() -> {
+        speechThread = new Thread(() -> {
             Trying_Different_Languages I = new Trying_Different_Languages();
             String firstName = Model.getInstance().getClient().firstNameProperty().get();
             String checkingNumber = Model.getInstance().getClient().checkingAccountProperty().get().accountNumberProperty().get();
@@ -91,9 +94,7 @@ public class DashboardController implements Initializable {
                     } catch (LineUnavailableException | IOException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    if (customerSay.contains("I need assistance")) {
-                        mute = false;
-                    }
+                    if (customerSay.contains("I need assistance")) mute = false;
                 }
                 while (useVoice && !mute) {
                     I.speak("What would you like to do? You can say something like: I want to check my balance, or give me the last 8 digits of my account number, or I want to send money.");
@@ -131,7 +132,6 @@ public class DashboardController implements Initializable {
                                 customerSay = (String) we.recordAndTranscribe(5);
                                 if (customerSay.contains("yes")) {
                                     customerSpell = customerSpell.replaceAll("\\s", "");
-                                    System.out.println("@" + customerSpell);
                                     payee_field.setText("@" + customerSpell);
                                     boolean amountConfirm = false;
                                     while (!amountConfirm){
@@ -150,7 +150,7 @@ public class DashboardController implements Initializable {
                                     I.speak("What is your message to the receiver? If you don't say anything, this field is going to be blank");
                                     customerSay = (String) we.recordAndTranscribe(15);
                                     message_field.setText(customerSay);
-                                    onSendMoney();
+                                    Platform.runLater(() -> onSendMoney());
                                     customerSay="Done";
                                 } else {
                                     I.speak("Sorry for my mistake. Let's start over");
@@ -185,6 +185,7 @@ public class DashboardController implements Initializable {
         speechThread.setDaemon(true);
         speechThread.start();
     }
+
     public void initLatestTransaction() {
         if (Model.getInstance().getLatestTransactions().isEmpty()) {
             Model.getInstance().setLatestTransactions();
@@ -196,9 +197,8 @@ public class DashboardController implements Initializable {
         MicrophoneStreamRecognizer we = new MicrophoneStreamRecognizer();
         String customerSay;
         List<String> spelledLetters = new ArrayList<>();
-
         Map<String, String> phoneticAlphabet = Map.ofEntries(
-                Map.entry("ALFA", "A"),
+                Map.entry("ALPHA", "A"),
                 Map.entry("BRAVO", "B"),
                 Map.entry("CHARLIE", "C"),
                 Map.entry("DELTA", "D"),
@@ -242,13 +242,12 @@ public class DashboardController implements Initializable {
         while (true) {
             try {
                 customerSay = (String) we.recordAndTranscribe(5);
-
                 if (customerSay.equalsIgnoreCase("done")) {
                     break;
                 } else {
                     String letter = phoneticAlphabet.get(customerSay.toUpperCase());
                     if (letter != null) {
-                        spelledLetters.add(letter);
+                        spelledLetters.add(letter.toLowerCase());
                         I.speak("You said '" + letter + "'. Next letter please!");
                     } else {
                         System.out.println(customerSay);
@@ -272,14 +271,20 @@ public class DashboardController implements Initializable {
         double amount = Double.parseDouble((amount_field.getText()));
         String message = message_field.getText();
         String sender = Model.getInstance().getClient().payeeAddressProperty().get();
-        ResultSet resultSet = Model. getInstance().getDatabaseDriver().searchClient(receiver);
+        ResultSet resultSet = Model.getInstance().getDatabaseDriver().searchClient(receiver);
+        boolean receiverNotFound = true;
         try {
-            if (resultSet.isBeforeFirst()) {
-                Model.getInstance().getDatabaseDriver().updateBalance(receiver, amount, "ADD");
+            if (resultSet.next()) {
+                // Receiver was found, so set the flag to false
+                receiverNotFound = false;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (receiverNotFound) {
+            return; // Do nothing if the receiver is not found
+        }
+        Model.getInstance().getDatabaseDriver().updateBalance(receiver, amount, "ADD");
         Model.getInstance().getDatabaseDriver().updateBalance(sender, amount, "SUB");
         Model.getInstance().getClient().savingAccountProperty().get().setBalance(Model.getInstance().getDatabaseDriver().getSavingAccountBalance(sender));
         Model.getInstance().getDatabaseDriver().newTransaction(sender, receiver, amount, message);

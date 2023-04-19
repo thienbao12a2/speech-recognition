@@ -1,6 +1,7 @@
 package com.jmc.vaultbank.Views;
 
 import com.jmc.vaultbank.Controllers.Admin.ClientCellController;
+import com.jmc.vaultbank.Controllers.Admin.ClientsController;
 import com.jmc.vaultbank.Models.Client;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;

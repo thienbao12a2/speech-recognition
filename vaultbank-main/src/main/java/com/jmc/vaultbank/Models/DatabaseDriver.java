@@ -15,7 +15,7 @@ public class DatabaseDriver {
             String url = "jdbc:mysql://localhost:3306/vaultbank";
             String user = "root";
 //            String password = "Seattle2020#";
-            String password = "Heoboy123$%^";
+            String password = "Seattle2020#";
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to Vault Bank Database");
             // Do something with the connection
@@ -24,6 +24,18 @@ public class DatabaseDriver {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             System.out.println("MySQL JDBC driver not found");
+            e.printStackTrace();
+        }
+    }
+    //DELETE CLIENTS
+    public void deleteClient(String username) {
+        Statement statement;
+        try {
+            statement = this.connection.createStatement();
+            statement.executeUpdate("DELETE FROM clients WHERE Username='" + username + "';");
+            statement.executeUpdate("DELETE FROM checkingaccounts WHERE Username='" + username + "';");
+            statement.executeUpdate("DELETE FROM savingaccounts WHERE Username='" + username + "';");
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -76,30 +88,7 @@ public class DatabaseDriver {
         }
         return balance;
     }
-//    public void updateBalance(String username, double amount, String operation) {
-//        Statement statement;
-//        ResultSet resultSet;
-//        try {
-//            statement = this.connection.createStatement();
-//            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts WHERE Owner='"+username+"';");
-//            double newBalance;
-//            while (resultSet.next()) {
-//                double balance = resultSet.getDouble("Balance");
-//                if (operation.equals("ADD")) {
-//                    newBalance = balance + amount;
-//                    statement.executeUpdate("UPDATE SavingsAccounts SET Balance="+newBalance+" WHERE Owner='"+username+"';");
-//                } else {
-//                    if (balance >= amount) {
-//                        newBalance = balance - amount;
-//                        statement.executeUpdate("UPDATE SavingsAccounts SET Balance="+newBalance+" WHERE Owner='"+username+"';");
-//                    }
-//                }
-//            }
-//            resultSet.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    //UPDATE
 public void updateBalance(String username, double amount, String operation) {
     Statement statement;
     ResultSet resultSet;
@@ -121,7 +110,6 @@ public void updateBalance(String username, double amount, String operation) {
         e.printStackTrace();
     }
 }
-
     public void newTransaction(String sender, String receiver, double amount, String message) {
         Statement statement;
         try {
@@ -132,6 +120,7 @@ public void updateBalance(String username, double amount, String operation) {
             e.printStackTrace();
         }
     }
+
     public ResultSet getAdminData(String username, String password) {
         Statement statement;
         ResultSet resultSet = null;
@@ -143,6 +132,23 @@ public void updateBalance(String username, double amount, String operation) {
         }
         return resultSet;
     }
+    //JOIN
+    public ResultSet checkGoldMember(String username) {
+        Statement statement;
+        ResultSet resultSet = null;
+        try {
+            statement = this.connection.createStatement();
+            resultSet = statement.executeQuery("SELECT c.Owner, c.Balance + s.Balance AS TotalBalance" +
+                    "FROM checkingaccounts c" +
+                    "INNER JOIN savingsaccounts s" +
+                    "ON c.Owner = s.Owner" +
+                    "WHERE c.Owner = '"+username+"' AND (c.Balance + s.Balance) > 50000;");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+    // ADD
     public void createClient(String firstName, String lastName, String username, String password, LocalDate date) {
         Statement statement;
         try {
@@ -153,6 +159,7 @@ public void updateBalance(String username, double amount, String operation) {
             e.printStackTrace();
         }
     }
+    // ADD
     public void createCheckingAccount(String owner, String number, double transactionLimit, double balance) {
         Statement statement;
         try {
@@ -163,6 +170,7 @@ public void updateBalance(String username, double amount, String operation) {
             e.printStackTrace();
         }
     }
+    //ADD
     public void createSavingAccount(String owner, String number, double withdrawalLimit, double balance) {
         Statement statement;
         try {
@@ -184,6 +192,7 @@ public void updateBalance(String username, double amount, String operation) {
         }
         return resultSet;
     }
+    //SEARCHING
     public ResultSet searchClient(String username) {
         Statement statement;
         ResultSet resultSet = null;
@@ -195,6 +204,7 @@ public void updateBalance(String username, double amount, String operation) {
         }
         return resultSet;
     }
+    //UPDATE
     public void depositSavingAccount(String username, double amount) {
         Statement statement;
         try {
@@ -241,5 +251,7 @@ public void updateBalance(String username, double amount, String operation) {
         }
         return resultSet;
     }
-
+    public void dummy() {
+        checkGoldMember("baoton");
+    }
 }
